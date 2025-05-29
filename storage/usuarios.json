@@ -1,0 +1,16 @@
+[
+    {
+        "nombre": "Paola",
+        "correo": "estudiante@gmail.com",
+        "contrasena": "$2y$10$Lk6DIGcbvfjmPPgzozqF8OQYC84RWrsNsFYQdXTKUH4nye2Yd.OTG",
+        "tipo_usuario": "admin",
+        "fecha_registro": "2025-05-29 17:52:51"
+    },
+    {
+        "nombre": "Paola",
+        "correo": "estudiante@gmail.com",
+        "contrasena": "$2y$10$jBYWYOWaR\/wyBDVBWN9hI.L4OFkDxdedWz3KeXgycJvS9iSb2GsIm",
+        "tipo_usuario": "user",
+        "fecha_registro": "2025-05-29 18:00:50"
+    }
+]
