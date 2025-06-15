@@ -3,43 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegistroController extends Controller
 {
+    // Muestra el formulario de registro
     public function mostrarFormulario()
     {
         return view('registro');
     }
 
+    // Procesa el formulario de registro
     public function procesarRegistro(Request $request)
     {
-        // Validación de los datos del formulario
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'correo' => 'required|email',
-            'contrasena' => 'required|min:6|confirmed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
             'tipo_usuario' => 'required|in:admin,user',
         ]);
 
-        // Guardar datos en archivo JSON para simular almacenamiento
-        $usuariosFile = storage_path('usuarios.json');
-        $usuarios = [];
-
-        if (file_exists($usuariosFile)) {
-            $usuarios = json_decode(file_get_contents($usuariosFile), true);
-        }
-
-        $usuarios[] = [
-            'nombre' => $validated['nombre'],
-            'correo' => $validated['correo'],
-            'contrasena' => password_hash($validated['contrasena'], PASSWORD_DEFAULT),
+        // Crear el usuario
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
             'tipo_usuario' => $validated['tipo_usuario'],
-            'fecha_registro' => now()->toDateTimeString(),
-        ];
-
-        file_put_contents($usuariosFile, json_encode($usuarios, JSON_PRETTY_PRINT));
+        ]);
 
         return redirect()->route('registro.form')->with('success', 'Usuario registrado correctamente.');
     }
 }
-
